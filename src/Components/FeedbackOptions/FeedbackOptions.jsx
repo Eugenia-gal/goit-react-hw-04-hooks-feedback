@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import VoteButton from 'Components/Button';
 import CustomOption from './FeedbackOptions.styled';
 
-const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+const FeedbackOptions = ({ options }) => {
   const ucFirst = str => str[0].toUpperCase() + str.slice(1);
   return (
     <CustomOption>
-      {options.map(key => (
+      {options.map(option => (
         <VoteButton
-          key={key}
-          name={ucFirst(key)}
-          id={key}
-          onClick={onLeaveFeedback}
+          key={option.name}
+          name={ucFirst(option.name)}
+          id={option.name}
+          onClick={option.onLeaveFeedback}
         />
       ))}
     </CustomOption>
@@ -20,8 +20,12 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => {
 };
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.array.isRequired,
-  onLeaveFeedback: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      onLeaveFeedback: PropTypes.func,
+    }),
+  ),
 };
 
 export default FeedbackOptions;
