@@ -3,9 +3,10 @@ import Button from './Button.styled';
 import PropTypes from 'prop-types';
 
 const VoteButton = ({ name, onClick, id }) => {
+  const ucFirst = str => str[0].toUpperCase() + str.slice(1);
   return (
     <Button type="button" key={id} id={id} onClick={onClick}>
-      {name}
+      {ucFirst(name)}
     </Button>
   );
 };

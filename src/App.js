@@ -9,16 +9,20 @@ function App() {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const hendlerGoodClick = () => {
-    setGood(good + 1);
-  };
-
-  const hendlerNeutralClick = () => {
-    setNeutral(neutral + 1);
-  };
-
-  const hendlerBadClick = () => {
-    setBad(bad + 1);
+  const handleClick = e => {
+    switch (e.target.id) {
+      case 'good':
+        setGood(good + 1);
+        break;
+      case 'neutral':
+        setNeutral(neutral + 1);
+        break;
+      case 'bad':
+        setBad(bad + 1);
+        break;
+      default:
+        return;
+    }
   };
 
   const countTotalFeedback = () => {
@@ -31,16 +35,12 @@ function App() {
     return rez;
   };
 
-  const options = [
-    { name: 'good', onLeaveFeedback: hendlerGoodClick },
-    { name: 'neutral', onLeaveFeedback: hendlerNeutralClick },
-    { name: 'bad', onLeaveFeedback: hendlerBadClick },
-  ];
+  const options = [{ name: 'good' }, { name: 'neutral' }, { name: 'bad' }];
   const isVoted = countTotalFeedback();
 
   return (
     <Section title="Please leave feedback">
-      <FeedbackOptions options={options} />
+      <FeedbackOptions options={options} onLeaveFeedback={handleClick} />
 
       {isVoted ? (
         <Statistics
@@ -58,54 +58,3 @@ function App() {
 }
 
 export default App;
-
-// class oldApp extends Component {
-//   state = {
-//     good: 0,
-//     neutral: 0,
-//     bad: 0,
-//   };
-
-//   hendlerClick = e => {
-//     const name = e.target.id;
-//     this.setState(oldState => {
-//       return { [name]: oldState[name] + 1 };
-//     });
-//   };
-
-//   countTotalFeedback = () => {
-//     return this.state.good + this.state.neutral + this.state.bad;
-//   };
-
-//   countPositiveFeedbackPercentage = () => {
-//     const total = this.countTotalFeedback();
-//     const rez = Math.ceil((100 * this.state.good) / total);
-//     return rez;
-//   };
-
-//   render() {
-//     const { good, neutral, bad } = this.state;
-//     const isVoted = this.countTotalFeedback();
-
-//     return (
-//       <Section title="Please leave feedback">
-//         <FeedbackOptions
-//           options={Object.keys(this.state)}
-//           onLeaveFeedback={this.hendlerClick}
-//         />
-
-//         {isVoted ? (
-//           <Statistics
-//             good={good}
-//             neutral={neutral}
-//             bad={bad}
-//             total={this.countTotalFeedback}
-//             positivePercentage={this.countPositiveFeedbackPercentage}
-//           />
-//         ) : (
-//           <NotificationMessage message="No feedback given" />
-//         )}
-//       </Section>
-//     );
-//   }
-// }

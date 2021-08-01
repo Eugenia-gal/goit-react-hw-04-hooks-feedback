@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import VoteButton from 'Components/Button';
 import CustomOption from './FeedbackOptions.styled';
 
-const FeedbackOptions = ({ options }) => {
-  const ucFirst = str => str[0].toUpperCase() + str.slice(1);
+const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
     <CustomOption>
       {options.map(option => (
         <VoteButton
           key={option.name}
-          name={ucFirst(option.name)}
+          name={option.name}
           id={option.name}
-          onClick={option.onLeaveFeedback}
+          onClick={onLeaveFeedback}
         />
       ))}
     </CustomOption>
